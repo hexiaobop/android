@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   
+  >
+
+    <TextView
+        android:id="@+id/sd_path"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"    android:textSize="20dp" 
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:text="@string/path" />
+        <Button
+        android:id="@+id/btn_back"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       android:text="@string/return1"
+        android:layout_alignParentBottom="true"
+       />
+
+    <ListView
+        android:id="@+id/sd_files"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_below="@id/sd_path"
+		android:layout_above="@id/btn_back">
+    </ListView>
+
+
+
+</RelativeLayout>
