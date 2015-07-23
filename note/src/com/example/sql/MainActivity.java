@@ -35,7 +35,7 @@ private Handle handle;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		handle = new Handle();
-		handle.dbhandle(this);
+		handle.dbhandle();
 		title = (EditText) findViewById(R.id.title);
 		data = (EditText) findViewById(R.id.data);
 		list = (ListView) findViewById(R.id.list);
@@ -50,7 +50,8 @@ private Handle handle;
 				Cursor cursor = handle.findall(t.getText().toString());
 				Intent intent = new Intent();
 				 while (cursor.moveToNext()) {  
-			            
+					 intent.putExtra("id",cursor.getString(cursor  
+			                    .getColumnIndex("_id")));  
 			           intent.putExtra("title",cursor.getString(cursor  
 			                    .getColumnIndex("note_title")));  
 			           intent.putExtra("data",cursor.getString(cursor  
@@ -87,7 +88,13 @@ private Handle handle;
 			String  date   =   formatter.format(curDate);  
 			if(titleE.equals("")||dataE.equals(""))
 			{
-				Toast.makeText(MainActivity.this, "输完再保存，慌个啥呢", Toast.LENGTH_LONG).show();
+				Toast.makeText(MainActivity.this, "输完再保存，慌个啥呢", Toast.LENGTH_SHORT).show();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else{
 				if(handle.add(titleE,dataE,date)){
@@ -112,5 +119,12 @@ private Handle handle;
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.disable,cursor , new String[]{"_id","note_title","note_date"}, new int[]{R.id.list_id,R.id.list_title,R.id.list_time});
 		
 		list.setAdapter(adapter);
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		disable();
+		
 	}
 }

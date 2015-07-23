@@ -12,11 +12,11 @@ import android.widget.SimpleCursorAdapter;
 public class Handle {
 	
 	
-	private  SQLiteDatabase db;
-	public  void dbhandle(Activity ac){
+	private   SQLiteDatabase db;
+	public  void dbhandle(){
 		
-	 db = SQLiteDatabase.openOrCreateDatabase(ac.getFilesDir()
-     		.toString()+"/note.db", null);
+	 db = SQLiteDatabase.openOrCreateDatabase(
+     		"/data/data/com.example.sql/note.db", null);
 	 
 	 try{
 		
@@ -66,6 +66,28 @@ public class Handle {
 		Cursor cursor = db.rawQuery(sql,null);
 		return cursor;	
 	}
-	
-	
+	public boolean delete(String id)
+	{
+		boolean flag = false;
+		if(id.equals("")||id==null){
+			flag=false;
+		}
+			
+		
+		
+		else{
+		String sql ="delete from noteeveryday where _id="+id;
+		try{
+			
+			db.execSQL(sql);
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+		return flag;
+	}
 	}
