@@ -5,6 +5,7 @@ import java.util.Date;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -45,8 +46,19 @@ private Handle handle;
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			     
-	      
+			TextView t = (TextView) arg1.findViewById(R.id.list_id);
+				Cursor cursor = handle.findall(t.getText().toString());
+				Intent intent = new Intent();
+				 while (cursor.moveToNext()) {  
+			            
+			           intent.putExtra("title",cursor.getString(cursor  
+			                    .getColumnIndex("note_title")));  
+			           intent.putExtra("data",cursor.getString(cursor  
+			                    .getColumnIndex("note_data")));  
+			        } 
+				 intent.setClass(MainActivity.this, ResultActivity.class);
+				 startActivity(intent);
+			
 
 	}
 		});
@@ -83,8 +95,7 @@ private Handle handle;
 					title.setText(null);
 					data.setText(null);
 					
-					disable();
-					
+					disable();				
 				}
 				else{
 					Toast.makeText(MainActivity.this, "没有保存到数据库", Toast.LENGTH_LONG).show();
@@ -98,7 +109,7 @@ private Handle handle;
 	public void disable()
 	{
 		Cursor cursor = handle.findall();
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.disable,cursor , new String[]{"note_title","note_date"}, new int[]{R.id.list_title,R.id.list_time});
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.disable,cursor , new String[]{"_id","note_title","note_date"}, new int[]{R.id.list_id,R.id.list_title,R.id.list_time});
 		
 		list.setAdapter(adapter);
 	}

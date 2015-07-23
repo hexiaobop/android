@@ -14,11 +14,12 @@ public class Handle {
 	
 	private  SQLiteDatabase db;
 	public  void dbhandle(Activity ac){
+		
 	 db = SQLiteDatabase.openOrCreateDatabase(ac.getFilesDir()
      		.toString()+"/note.db", null);
 	 
 	 try{
-		 
+		
 	 db.execSQL("create table noteeveryday(_id integer primary key autoincrement,"
 				+"note_title varchar(50),"
 				+"note_data varchar(255),"
@@ -27,6 +28,7 @@ public class Handle {
 	 }
 	catch(Exception e)
 	{
+		 
 		e.printStackTrace();
 	}	 
 	}
@@ -56,6 +58,13 @@ public class Handle {
 		
 		return flag;
 		
+	}
+	public  Cursor  findall(String i) {
+		// TODO Auto-generated method stub		
+		
+		String sql = "select * from  noteeveryday where _id="+i;
+		Cursor cursor = db.rawQuery(sql,null);
+		return cursor;	
 	}
 	
 	
